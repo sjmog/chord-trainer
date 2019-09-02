@@ -5,6 +5,7 @@ import Trainer from "./Trainer.js";
 import ConfigureTimer from "./ConfigureTimer.js";
 import ConfigureNotes from "./ConfigureNotes.js";
 import ConfigureVariants from "./ConfigureVariants.js";
+import Classifier from "./Classifier.js";
 import './App.css';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           note={note} 
           variant={variant}
         />
+        <Classifier count={count} />
       </header>
       <Trainer variant={variant} />
       <ConfigureTimer max={timerMax} setTimerMax={setTimerMax} />
