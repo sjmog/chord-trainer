@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Classifier(props) {
   const MIDI_PITCH_TO_NOTE = {
@@ -94,9 +94,12 @@ function Classifier(props) {
 
 
   const [playedNotes, setPlayedNotes] = useState([])
-  const [isRecording, setIsRecording] = useState(false)
+  const [mediaRecorder, setMediaRecorder] = useState(null)
 
-  const handleSuccess = function(stream) {
+  const setupMediaRecorder = function(stream) {
+    if(props.count === 2) { mediaRecorder.stop() }
+    if(props.count !== 0) { return; }
+
     const options = {mimeType: 'audio/webm'};
     const mediaRecorder = new MediaRecorder(stream, options);
 
@@ -104,27 +107,38 @@ function Classifier(props) {
       if(e.data.size > 0) {
         window.MODEL.transcribeFromAudioFile(e.data)
           .then((sequence) => {
-            console.log(sequence)
             if(sequence.notes.length > 0) {
               const longNotes = sequence.notes.filter((note) => {
-                return (note.endTime - note.startTime) > 1
+                return (note.endTime - note.startTime) > 0.2
               })
 
-              setPlayedNotes(longNotes.map(note => MIDI_PITCH_TO_NOTE[String(note.pitch)]))
+              const heardNotes = longNotes.map(note => MIDI_PITCH_TO_NOTE[String(note.pitch)])
+
+              setPlayedNotes(heardNotes)
             }
           })
           .catch(err => { console.log(err.message) })
       }
     });
 
-    mediaRecorder.start(2000);
-    setIsRecording(true)
+    setMediaRecorder(mediaRecorder)
   };
 
-  if(!isRecording) {
-    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-      .then(handleSuccess)
-  }
+  useEffect(() => {
+    if(!mediaRecorder) {
+      navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+        .then(setupMediaRecorder)
+    } else if (mediaRecorder.state == "'inactive") {
+      
+    } else if ((props.count === 0) && (mediaRecorder.state == "inactive")) {
+      mediaRecorder.start()
+    } else if ((props.count === 1) && mediaRecorder.state == "recording") {
+      // only record a single count of music - this may not be enough, especially at higher BPMs
+      mediaRecorder.requestData()
+      mediaRecorder.stop()
+    }
+
+  }, [mediaRecorder, props.count, setupMediaRecorder])
 
   return(
     <div className="Classifier">

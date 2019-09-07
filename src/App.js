@@ -60,6 +60,7 @@ function App() {
           pastNote={pastNote}
           pastVariant={pastVariant}
         />
+        <Classifier count={count} />
       </header>
       <Trainer variant={pastVariant} />
       <ConfigureTimeSignature max={beatUnit} setBeatUnit={setBeatUnit} />
