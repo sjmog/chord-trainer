@@ -14,9 +14,20 @@
   color: white;
 }
 
+.Display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .Display h1 {
   position: relative;
   top: -3rem;
+}
+
+.Display .next-up {
+  position: absolute;
+  top: 3rem;
 }
 
 

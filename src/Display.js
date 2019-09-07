@@ -1,23 +1,36 @@
 import React from 'react';
 
 function Display(props) {
-  const variant = () => {
-    return props.variant.split("^")[0];
+  const extensions = (variant) => {
+    return variant.split("^")[0];
   }
 
-  const superscripts = () => {
-    return props.variant.split("^")[1];
+  const superscripts = (variant) => {
+    return variant.split("^")[1];
   }
 
   return(
     <div className="Display">
+      <div className="next-up">
+        <label>Next up</label>
+        <h3>
+          {props.note}
+          <span className="variant">
+            {extensions(props.variant)}
+          </span>
+          <span className="superscript">
+            {superscripts(props.variant)}
+          </span>
+        </h3>
+      </div>
+
       <h1>
-        {props.note}
+        {props.pastNote}
         <span className="variant">
-          {variant()}
+          {extensions(props.pastVariant)}
         </span>
         <span className="superscript">
-          {superscripts()}
+          {superscripts(props.pastVariant)}
         </span>
       </h1>
     </div>

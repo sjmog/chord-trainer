@@ -15,16 +15,24 @@ function App() {
 
   const [notes, setNotes] = useState(["C"]);
   const [variants, setVariants] = useState([""]);
-  const [timerMax, setTimerMax] = useState(10);
+  const [timerMax, setTimerMax] = useState(4);
   const [count, setCount] = useState(0);
+
   const [note, setNote] = useState("C");
   const [variant, setVariant] = useState("");
+
+  const [pastNote, setPastNote] = useState("");
+  const [pastVariant, setPastVariant] = useState("");
 
   useEffect(() => {
     let interval = null;
 
     if (count >= timerMax) {
+      // never choose the same note
       const nextNotes = notes.filter(existingNote => existingNote !== note)
+
+      setPastNote(note)
+      setPastVariant(variant)
 
       nextNotes.length > 0 ? setNote(random(nextNotes)) : setNote(note)
       variants.length > 0 ? setVariant(random(variants)) : setVariant(variant)
@@ -46,9 +54,11 @@ function App() {
         <Display 
           note={note} 
           variant={variant}
+          pastNote={pastNote}
+          pastVariant={pastVariant}
         />
       </header>
-      <Trainer variant={variant} />
+      <Trainer variant={pastVariant} />
       <ConfigureTimer max={timerMax} setTimerMax={setTimerMax} />
     </div>
   );
