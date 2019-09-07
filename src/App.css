@@ -116,29 +116,39 @@ label {
   font-size: 12px;
 }
 
-.ConfigureTimer {
+.ConfigureBpm {
   position: absolute;
-  right: 5rem;
+  right: 20rem;
   bottom: 4rem;
 }
 
-.timerInput {
+.ConfigureTimeSignature {
+  position: absolute;
+  right: 7rem;
+  bottom: 4rem;
+}
+
+.bpmInput, .beatUnitInput {
   background: transparent;
   color: white;
   border: none;
-  font-size: 72px;
+  font-size: 48px;
   width: 100px;
 }
 
-.timerInput:focus {
+.beatUnitInput {
+  width: 70px;
+}
+
+.bpmInput:focus, .beatUnitInput:focus {
   outline: none;
 }
 
-.timerInput + span {
+.bpmInput + span, .beatUnitInput + span {
   color: white;
   position: relative;
   left: -1.2rem;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .ConfigureNotes {
