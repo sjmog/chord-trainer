@@ -47,7 +47,6 @@ function App() {
           note={note} 
           variant={variant}
         />
-        <Classifier count={count} />
       </header>
       <Trainer variant={variant} />
       <ConfigureTimer max={timerMax} setTimerMax={setTimerMax} />

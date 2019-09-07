@@ -7,7 +7,7 @@ function TimerBar(props) {
     for(let i = 0; i < props.max; i++) {
       bars.push(
         <div 
-        className={`bar ${i < props.count ? 'bar--active' : ''}`}
+        className={`bar ${i < props.count + 1 ? 'bar--active' : ''}`}
         key={i} />
       )
     }

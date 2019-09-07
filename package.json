@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@magenta/music": "^1.10.1",
+    "material-icons-react": "^1.0.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1"
